@@ -7,7 +7,7 @@ Twitter: @robogajesh
 
 * createSAFTE - function to create a onchain SAFTE
 * cancelSAFTE - just incase the deal is cancelled btw the investor and the project, the project address or the contractInitiator can cancel the onchain SAFTE 
-* transact - function to execute transaction. can be only done by the investor
+* transact - function to execute SAFTE. can be only done by the investor
 * claimUnlockedTokens - function for the investor to claim his unstaked tokens
 
 ## Links
