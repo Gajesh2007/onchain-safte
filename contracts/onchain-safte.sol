@@ -27,6 +27,7 @@ contract onchainSAFTE {
     mapping (uint256 => bool) unlocked;
     mapping (uint256 => uint256) totalTokens;
 
+    /// @dev createSAFTE - function to create a onchain SAFTE
     function createSAFTE(string memory _name, string memory _desc, address _investor, address _project, address _stablecoin, IERC20 _projectToken, uint256 _upfront, uint256 _investmentAmount, uint256[] memory _vestingUnlockCycle, uint256[] memory _unlockAmount) external {
         require(_vestingUnlockCycle.length == _unlockAmount.length, "ERR");
         uint256 _totalTokens = _upfront;
@@ -39,6 +40,7 @@ contract onchainSAFTE {
         safte.push(SAFTE({name: _name, desc: _desc, investor: _investor, project: _project, stablecoin: IERC20(_stablecoin), projectToken: IERC20(_projectToken), contractInitiator: msg.sender, upfront: _upfront, investmentAmount: _investmentAmount, investmentTime: 0, vestingUnlockCycle: _vestingUnlockCycle, unlockAmount: _unlockAmount, invested: false, cancelled: false}));
     }
 
+    /// @dev cancelSAFTE - just incase the deal is cancelled btw the investor and the project, the project address or the contractInitiator can cancel the onchain SAFTE 
     function cancelSAFTE(uint256 _id) external {
         require(msg.sender == safte[_id].contractInitiator || safte[_id].project == msg.sender, "you're not the contract initiator or the project");
         require(safte[_id].cancelled == false && safte[_id].invested == false, "already invested or cancelled");
@@ -47,6 +49,7 @@ contract onchainSAFTE {
         safte[_id].cancelled = true;
     }
 
+    /// @dev transact - function to execute transaction. can be only done by the investor
     function transact(uint256 _id) external {
         SAFTE storage _safte = safte[_id];
         require(msg.sender == _safte.investor, "you're not the investor");
@@ -57,6 +60,7 @@ contract onchainSAFTE {
         _safte.invested = true;
     }
 
+    /// @dev claimUnlockedTokens - function for the investor to claim his unstaked tokens
     function claimUnlockedTokens(uint256 _id, uint256 _unlockNumber) external {
         SAFTE storage _safte = safte[_id];
         require(msg.sender == _safte.investor, "you're not the investor");
