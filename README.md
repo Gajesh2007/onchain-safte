@@ -3,6 +3,13 @@
 Author: Gajesh Naik
 Twitter: @robogajesh 
 
+## Function details
+
+* createSAFTE - function to create a onchain SAFTE
+* cancelSAFTE - just incase the deal is cancelled btw the investor and the project, the project address or the contractInitiator can cancel the onchain SAFTE 
+* transact - function to execute transaction. can be only done by the investor
+* claimUnlockedTokens - function for the investor to claim his unstaked tokens
+
 ## Links
 
 Ropsten Testnet: https://ropsten.etherscan.io/address/0xe67d774948167D7dC5C32E088Bb65121e1899E21#code
